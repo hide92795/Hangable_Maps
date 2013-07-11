@@ -19,12 +19,12 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.resources.ResourceLocation;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.ModLoader;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.MapCoord;
 import net.minecraft.world.storage.MapData;
 

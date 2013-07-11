@@ -46,7 +46,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "HangableMaps", name = "Hangable Maps", version = "1.6.1_1")
+@Mod(modid = "HangableMaps", name = "Hangable Maps", version = "1.6.2_1")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = {
 		"HM_MapData", "HM_MapInfo" }, packetHandler = hide92795.mods.hangablemaps.client.ClientPacketHandler.class), serverPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = {
 		"HM_ReqMapData", "HM_ReqMapInfo" }, packetHandler = ServerPacketHandler.class))
