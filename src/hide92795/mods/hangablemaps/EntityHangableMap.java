@@ -30,6 +30,7 @@ public class EntityHangableMap extends Entity {
 	public int mapId;
 
 	public ItemStack mapStack;
+	private int tickCounter1;
 
 	public EntityHangableMap(World par1World) {
 		super(par1World);
@@ -90,6 +91,7 @@ public class EntityHangableMap extends Entity {
 	public void setPositionAndRotation2(double var1, double var3, double var5, float var7, float var8, int var9) {
 		this.setPositionAndRotation(var1, this.posY, var5, var7, var8);
 	}
+
 	@Override
 	protected void entityInit() {
 		this.dataWatcher.addObject(19, new Integer(0));
@@ -145,20 +147,23 @@ public class EntityHangableMap extends Entity {
 		var6 += 0.0f;
 		this.setPosition((double) var5, (double) var6, (double) var7);
 		float var9 = -0.00625F;
-		this.boundingBox.setBounds((double) (var5 - var2 - var9), (double) (var6 - var3 - var9),
-				(double) (var7 - var4 - var9), (double) (var5 + var2 + var9), (double) (var6 + var3 + var9),
-				(double) (var7 + var4 + var9));
+		// this.boundingBox.setBounds((double) (var5 - var2 - var9), (double) (var6 - var3 - var9),
+		// (double) (var7 - var4 - var9), (double) (var5 + var2 + var9), (double) (var6 + var3 + var9),
+		// (double) (var7 + var4 + var9));
 	}
 
 	/**
 	 * Called to update the entity's position/logic.
-	 */@Override
+	 */
+	@Override
 	public void onUpdate() {
-		if (!this.worldObj.isRemote) {
+		if (this.tickCounter1++ == 100 && !this.worldObj.isRemote) {
+			this.tickCounter1 = 0;
 			if (!this.isDead && !this.onValidSurface()) {
+				System.out.println(this.onValidSurface());
+				System.out.println(isDead);
 				this.setDead();
-				this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ,
-						mapStack));
+				this.entityDropItem(mapStack, 0.0F);
 			}
 		}
 	}
@@ -167,60 +172,62 @@ public class EntityHangableMap extends Entity {
 	 * checks to make sure painting can be placed there
 	 */
 	public boolean onValidSurface() {
-		if (!this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty()) {
-			return false;
-		} else {
-			int var1 = 1;
-			int var2 = 1;
-			int var3 = this.xPosition;
-			int var4 = this.yPosition;
-			int var5 = this.zPosition;
+		// if (!this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty()) {
+		// System.out.println("EntityHangableMap.onValidSurface()-0");
+		// return true;
+		// } else {
+		int var1 = 1;
+		int var2 = 1;
+		int var3 = this.xPosition;
+		int var4 = this.yPosition;
+		int var5 = this.zPosition;
 
-			if (this.direction == 0) {
-				var3 = MathHelper.floor_double(this.posX - (double) 0.5d);
-			}
+		if (this.direction == 0) {
+			var3 = MathHelper.floor_double(this.posX - (double) 0.5d);
+		}
 
-			if (this.direction == 1) {
-				var5 = MathHelper.floor_double(this.posZ - (double) 0.5d);
-			}
+		if (this.direction == 1) {
+			var5 = MathHelper.floor_double(this.posZ - (double) 0.5d);
+		}
 
-			if (this.direction == 2) {
-				var3 = MathHelper.floor_double(this.posX - (double) 0.5d);
-			}
+		if (this.direction == 2) {
+			var3 = MathHelper.floor_double(this.posX - (double) 0.5d);
+		}
 
-			if (this.direction == 3) {
-				var5 = MathHelper.floor_double(this.posZ - (double) 0.5d);
-			}
+		if (this.direction == 3) {
+			var5 = MathHelper.floor_double(this.posZ - (double) 0.5d);
+		}
 
-			if (this.direction == 4) {
-				var4 = MathHelper.floor_double(this.posY - (double) 0.5d);
-			}
-
+		if (this.direction == 4) {
 			var4 = MathHelper.floor_double(this.posY - (double) 0.5d);
+		}
 
-			for (int var6 = 0; var6 < var1; ++var6) {
-				for (int var7 = 0; var7 < var2; ++var7) {
-					Material var8;
+		var4 = MathHelper.floor_double(this.posY - (double) 0.5d);
 
-					if (this.direction != 0 && this.direction != 2) {
-						var8 = this.worldObj.getBlockMaterial(this.xPosition, var4 + var7, var5 + var6);
-					} else {
-						var8 = this.worldObj.getBlockMaterial(var3 + var6, var4 + var7, this.zPosition);
-					}
+		for (int var6 = 0; var6 < var1; ++var6) {
+			for (int var7 = 0; var7 < var2; ++var7) {
+				Material var8;
 
-					if (!var8.isSolid()) {
-						return false;
-					}
+				if (this.direction != 0 && this.direction != 2) {
+					var8 = this.worldObj.getBlockMaterial(this.xPosition, var4 + var7, var5 + var6);
+				} else {
+					var8 = this.worldObj.getBlockMaterial(var3 + var6, var4 + var7, this.zPosition);
+				}
+
+				if (!var8.isSolid()) {
+					return false;
 				}
 			}
-			return true;
 		}
+		return true;
+		// }
 	}
 
 	/**
 	 * Returns true if other Entities should be prevented from moving through
 	 * this Entity.
-	 */@Override
+	 */
+	@Override
 	public boolean canBeCollidedWith() {
 		return true;
 	}
@@ -230,6 +237,10 @@ public class EntityHangableMap extends Entity {
 	 */
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
+		System.out.println("EntityHangableMap.attackEntityFrom()");
+		if (this.isEntityInvulnerable()) {
+			return false;
+		}
 		if (!this.isDead && !this.worldObj.isRemote) {
 			this.setDead();
 			this.setBeenAttacked();
@@ -243,7 +254,7 @@ public class EntityHangableMap extends Entity {
 				return true;
 			}
 
-			this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, mapStack));
+			this.entityDropItem(mapStack, 0.0F);
 		}
 
 		return true;
@@ -308,7 +319,7 @@ public class EntityHangableMap extends Entity {
 	public void moveEntity(double par1, double par3, double par5) {
 		if (!this.worldObj.isRemote && !this.isDead && par1 * par1 + par3 * par3 + par5 * par5 > 0.0D) {
 			this.setDead();
-			this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, mapStack));
+			this.entityDropItem(mapStack, 0.0F);
 		}
 	}
 
@@ -319,7 +330,7 @@ public class EntityHangableMap extends Entity {
 	public void addVelocity(double par1, double par3, double par5) {
 		if (!this.worldObj.isRemote && !this.isDead && par1 * par1 + par3 * par3 + par5 * par5 > 0.0D) {
 			this.setDead();
-			this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, mapStack));
+			this.entityDropItem(mapStack, 0.0F);
 		}
 	}
 
