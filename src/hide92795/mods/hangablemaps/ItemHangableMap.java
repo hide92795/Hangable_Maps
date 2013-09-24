@@ -16,7 +16,7 @@ public class ItemHangableMap extends ItemMap {
 	protected ItemHangableMap(int par1) {
 		super(par1);
 		this.setMaxStackSize(64);
-		func_111206_d("map_filled");
+		setTextureName("map_filled");
 	}
 
 	@Override

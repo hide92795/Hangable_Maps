@@ -47,8 +47,8 @@ public class RenderHangableMaps extends Render {
 		this.gameSettings = minecraft.gameSettings;
 		this.bufferedImage = new DynamicTexture(128, 128);
 		this.textureManager = minecraft.renderEngine;
-		this.texture_mapdata = textureManager.func_110578_a("map", this.bufferedImage);
-		this.intArray = this.bufferedImage.func_110565_c();
+		this.texture_mapdata = textureManager.getDynamicTextureLocation("map", this.bufferedImage);
+		this.intArray = this.bufferedImage.getTextureData();
 		for (int var4 = 0; var4 < 16384; ++var4) {
 			this.intArray[var4] = 0;
 		}
@@ -69,7 +69,7 @@ public class RenderHangableMaps extends Render {
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		GL11.glShadeModel(GL11.GL_SMOOTH);
 		GL11.glDisable(GL11.GL_LIGHTING);
-		textureManager.func_110577_a(texture_map_background);
+		textureManager.bindTexture(texture_map_background);
 		GL11.glScalef(0.0625F, 0.0625F, 0.0625F);
 		Tessellator tessellator = Tessellator.instance;
 		tessellator.startDrawingQuads();
@@ -121,12 +121,12 @@ public class RenderHangableMaps extends Render {
 			}
 		}
 
-		this.bufferedImage.func_110564_a();
+		this.bufferedImage.updateDynamicTexture();
 		byte b1 = 0;
 		byte b2 = 0;
 
 		Tessellator tessellator = Tessellator.instance;
-		textureManager.func_110577_a(texture_mapdata);
+		textureManager.bindTexture(texture_mapdata);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_ALPHA_TEST);
@@ -141,7 +141,7 @@ public class RenderHangableMaps extends Render {
 
 		// render player icon
 		HangableMapData mapinfo = HangableMaps.instance.getMapinfos((short) entity.getMapIdFromDataWatcher());
-		textureManager.func_110577_a(this.texture_map_icon);
+		textureManager.bindTexture(this.texture_map_icon);
 		if (mapinfo.received) {
 			Iterator<EntityPlayer> iterator = player.worldObj.playerEntities.iterator();
 			while (iterator.hasNext()) {
@@ -241,8 +241,7 @@ public class RenderHangableMaps extends Render {
 	}
 
 	@Override
-	protected ResourceLocation func_110775_a(Entity entity) {
-		System.out.println("RenderHangableMaps.func_110775_a()");
-		return null;
+	protected ResourceLocation getEntityTexture(Entity entity) {
+		return texture_mapdata;
 	}
 }

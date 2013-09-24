@@ -17,7 +17,7 @@ public class ItemEmptyHangableMap extends ItemEmptyMap {
 	protected ItemEmptyHangableMap(int par1) {
 		super(par1);
 		setHasSubtypes(true);
-		func_111206_d("map_empty");
+		setTextureName("map_empty");
 	}
 
 	/**
