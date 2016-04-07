@@ -42,18 +42,6 @@ dependencies {
 
 }
 
-//Maybe implement this later, probably...
-//No need -- Tenshi Code injector is already inside
-//MAIN CLASS EXAMPLE: "Main-Class: lyonlancer5.commserv.ClientGUI"
-//CLASS PATH DEF: Class-Path: .
-//jar {
-//        manifest {
-//        attributes 'Class-Path': '.',
-//                        'Main-Class': 'lyonlancer5.xatrocore.utils.PropertyScanner'
-//                        
-//    }
-//}
-
 processResources
 {
     // this will ensure that this task is redone when the versions change.
