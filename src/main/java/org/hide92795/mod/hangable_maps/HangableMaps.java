@@ -38,7 +38,7 @@ public class HangableMaps {
 	@Instance("HangableMaps")
 	public static HangableMaps instance;
 
-	@SidedProxy(clientSide = "hide92795.mods.hangablemaps.client.ClientProxy", serverSide = "hide92795.mods.hangablemaps.CommonProxy")
+	@SidedProxy(clientSide = "org.hide92795.mod.hangable_maps.client.ClientProxy", serverSide = "org.hide92795.mod.hangable_maps.CommonProxy")
 	public static CommonProxy proxy;
 	
 	public static boolean drawIconName;
