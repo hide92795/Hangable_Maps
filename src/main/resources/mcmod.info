@@ -1,0 +1,14 @@
+[
+{
+  "modid": "HangableMaps",
+  "name": "Hangable Maps",
+  "description": "Let's try to hang maps on the wall! You can make a large map!",
+  "version": "1.7.10_1",
+  "credits": "",
+  "logoFile": "",
+  "mcversion": "1.7.10",
+  "url": "http://minecraft.hide92795.org/mod/hangable-maps/",
+  "updateUrl": "http://minecraft.hide92795.org/mod/hangable-maps/",
+  "authors": [ "hide92795", "Lyonlancer5" ]
+}
+]
